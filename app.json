@@ -4,7 +4,7 @@
     "slug": "TCC",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/images/barbie.jpg",
     "scheme": "tcc",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -12,31 +12,40 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "android": {
+        "adaptiveIcon": {
+          "foregroundImage": "./src/assets/images/miss.png",
+          "backgroundColor": "#ffffff"
+        },
+        "edgeToEdgeEnabled": true
       },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "web": {
+        "bundler": "metro",
+        "output": "static",
+        "favicon": "./src/assets/images/holiday2008.jpg"
+      },
+      "plugins": [
+        "expo-router",
+        [
+          "expo-screen-orientation",
+          {
+            "initialOrientation": "PORTRAIT"
+          },
+          "expo-splash-screen",
+          {
+            "image": "./src/assets/images/holiday2008.jpg",
+            "imageWidth": 700,
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+          }
+        ],
+        "expo-font"
+      ],
+      "experiments": {
+        "typedRoutes": true
+      }
     },
     "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ]
-    ],
-    "experiments": {
-      "typedRoutes": true
-    }
+    ]
   }
 }
