@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Text, View, TextInput, Alert } from 'react-native';
 import { router } from 'expo-router';
+import BackButton from '../../components/BackButton';
 
 // Mock function para simular verificação no banco de dados
 const checkPasswordFromDatabase = async (enteredPin: string): Promise<boolean> => {
@@ -51,7 +52,6 @@ export default function Acesso() {
       newPin[index] = text;
       setPin(newPin);
 
-      // Movimento entre os campos
       if (text && index < 2) {
         const nextRef = [inputRef1, inputRef2, inputRef3][index + 1];
         nextRef.current?.focus();
@@ -60,8 +60,9 @@ export default function Acesso() {
   };
 
   return (
-    <View className="flex-1 justify-center items-center p-4 bg-gray-100">
-      <Text className="text-xl font-semibold mb-4">Digite a senha</Text>
+    <View className="flex-1 justify-center items-center p-4 bg-white">
+      <BackButton/>
+      <Text className="text-xl mb-20 font-FlamanteBook">Digite a senha</Text>
       <View className="flex-row">
         {pin.map((value, index) => (
           <View key={index} className={`${index !== 0 ? 'pl-4' : ''}`}>
@@ -72,7 +73,8 @@ export default function Acesso() {
               keyboardType="numeric"
               maxLength={1}
               secureTextEntry
-              className="w-12 h-12 text-center text-2xl border border-gray-400 rounded-full bg-white"
+              className="w-24 h-24 text-center text-2xl border rounded-2xl bg-white"
+              style={{borderColor: '#787ED8'}}
             />
           </View>
         ))}
