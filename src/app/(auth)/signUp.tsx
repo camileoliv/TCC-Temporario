@@ -28,6 +28,8 @@ export default function Registro() {
     senhaMaeGanso: ['', '', ''] 
   });
 
+  const [hidePassword, setHidePassword] = useState(true);
+
   const [modalOpen, setModalOpen] = useState(false);
 
   const [showVerificationModal, setShowVerificationModal] = useState(false);
@@ -115,10 +117,19 @@ export default function Registro() {
 
           <InputField
             label="Senha"
-            placeholder="Digite uma senha para a sua conta, 8 digitos ou mais"
+            placeholder="Digite uma senha para a sua conta, 8 dígitos ou mais"
             value={form.password}
             onChangeText={(value) => handleChange('password', value)}
-            rightIcon={<AntDesign name="eye" size={27} color="#35AFA3" />}
+            secureTextEntry={hidePassword}
+            rightIcon={
+              <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
+                <AntDesign
+                  name={hidePassword ? 'eye' : 'eyeo'}
+                  size={27}
+                  color="#35AFA3"
+                />
+              </TouchableOpacity>
+            }
           />
 
           <View className="w-full mb-3">
@@ -171,8 +182,8 @@ export default function Registro() {
             className="flex flex-row justify-center items-center"
           >
             <View
-              className="flex flex-row h-16 w-44 justify-center items-center bg-indigo-600 border-[0.9px] rounded-3xl gap-2"
-              style={{ borderColor: '#F2F0F8' }}
+              className="flex flex-row h-20 w-60 justify-center items-center border-[5px] rounded-full gap-2"
+              style={{ backgroundColor: '#AFA8E8',borderColor: '#735573' }}
             >
               <Text className="font-FlamanteBook text-white text-2xl">Confirmar</Text>
               <AntDesign name="checkcircleo" size={20} color="#fff" />
