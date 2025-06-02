@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, ScrollView, Pressable, Alert } from 'react-native';
+import { Text, ScrollView, Pressable, Alert, View } from 'react-native';
 import BrilhoSelector from '../../components/exp/BrilhoSelector';
 import FonteSelector from '../../components/exp/FonteSelector';
 import AudioSettings from '../../components/exp/AudioSettings';
@@ -38,24 +38,26 @@ export default function Config({ childId }: Props) {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="items-center justify-center px-6 py-8 bg-white">
-      <Text className="text-xl font-bold mb-4">Configurar Perfil da Criança</Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-6 py-8 bg-white">
+      <View className='items-center justify-center'>
+        <Text className="text-xl font-bold mb-4">Configurar Perfil da Criança</Text>
 
-      <BrilhoSelector value={brilho} onChange={setBrilho} />
-      <AudioSettings
-        musica={musica}
-        sons={sons}
-        trancarVolume={trancarVolume}
-        setMusica={setMusica}
-        setSons={setSons}
-        setTrancarVolume={setTrancarVolume}
-      />
-      <FonteSelector value={fonte} onChange={setFonte} />
-      <AudioManager musica={musica} sons={sons} trancarVolume={trancarVolume} />
+        <BrilhoSelector value={brilho} onChange={setBrilho} />
+        <AudioSettings
+          musica={musica}
+          sons={sons}
+          trancarVolume={trancarVolume}
+          setMusica={setMusica}
+          setSons={setSons}
+          setTrancarVolume={setTrancarVolume}
+        />
+        <FonteSelector value={fonte} onChange={setFonte} />
+        <AudioManager musica={musica} sons={sons} trancarVolume={trancarVolume} />
 
-      <Pressable onPress={salvar} className="mt-10 bg-[#735573] px-6 py-3 rounded-2xl">
-        <Text className="text-white text-base font-semibold">Salvar Perfil</Text>
-      </Pressable>
+        <Pressable onPress={salvar} className="mt-10 bg-[#735573] px-6 py-3 rounded-2xl">
+          <Text className="text-white text-base font-semibold">Salvar Perfil</Text>
+        </Pressable>        
+      </View>
     </ScrollView>
   );
 }
