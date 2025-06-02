@@ -1,63 +1,105 @@
-import React, { useState } from 'react';
-import { Text, ScrollView, Pressable, Alert, View } from 'react-native';
-import BrilhoSelector from '../../components/exp/BrilhoSelector';
-import FonteSelector from '../../components/exp/FonteSelector';
-import AudioSettings from '../../components/exp/AudioSettings';
-import AudioManager from '../../components/exp/AudioManager';
+import { Text, View, TouchableOpacity } from 'react-native'
+import { router } from 'expo-router'
+import React, { useEffect } from 'react';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
-type FonteOption = 'pequena' | 'media' | 'grande';
+import CustomButton from '../../components/CustomButton'
+//import { doc, setDoc } from "firebase/firestore";
+//import { db } from "../firebaseConfig"; // seu arquivo de config do Firebase
 
-type Props = {
-  childId: string;
-};
+export default function Questions() {
+    useEffect(() => {
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    }, []);  
+  const handleAnswer = (resposta: 'sim' | 'nao' | 'nao sei') => {
+    console.log("Resposta selecionada:", resposta)
 
-export default function Config({ childId }: Props) {
-  const [brilho, setBrilho] = useState(1);
-  const [fonte, setFonte] = useState<FonteOption>('media');
-  const [musica, setMusica] = useState(false);
-  const [sons, setSons] = useState(false);
-  const [trancarVolume, setTrancarVolume] = useState(false);
-
-  const salvar = async () => {
-    try {
-      await fetch(`https://SEU_BACKEND_API/criancas/${childId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          brilho,
-          fonte,
-          musica,
-          sons,
-          trancarVolume,
-        }),
+  /*  try {
+      await setDoc(doc(db, "respostas", "respostaUsuario1"), {
+        resposta,
+        timestamp: new Date(),
       });
-      Alert.alert('Perfil criado com sucesso!');
-    } catch (err) {
-      Alert.alert('Erro ao criar o perfil');
-    }
-  };
+      console.log("Resposta salva com sucesso:", resposta);
+    } catch (error) {
+      console.error("Erro ao salvar resposta:", error);
+    } */
+  }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-6 py-8 bg-white">
-      <View className='items-center justify-center'>
-        <Text className="text-xl font-bold mb-4">Configurar Perfil da Criança</Text>
+    <View className='flex flex-col h-full items-center justify-evenly pt-10'
+    style={{backgroundColor: "#FCFCFE"}}>
 
-        <BrilhoSelector value={brilho} onChange={setBrilho} />
-        <AudioSettings
-          musica={musica}
-          sons={sons}
-          trancarVolume={trancarVolume}
-          setMusica={setMusica}
-          setSons={setSons}
-          setTrancarVolume={setTrancarVolume}
-        />
-        <FonteSelector value={fonte} onChange={setFonte} />
-        <AudioManager musica={musica} sons={sons} trancarVolume={trancarVolume} />
-
-        <Pressable onPress={salvar} className="mt-10 bg-[#735573] px-6 py-3 rounded-2xl">
-          <Text className="text-white text-base font-semibold">Salvar Perfil</Text>
-        </Pressable>        
+      <View className=' flex flex-col gap-[1.8]'>
+        <Text 
+        className='font-FlamanteBook p-1 text-3xl text-center '
+          style={{
+            color: '#787ED8',
+            textShadowColor: 'rgba(0, 0, 0, 0.1)',
+            textShadowOffset: { width: 0, height: 2 }, 
+            textShadowRadius: 7,
+          }}>Customize os jogos do seu filho!</Text>
+        <Text         
+        className='font-FlamanteBook p-1 text-3xl text-center '
+          style={{
+            color: '#787ED8',
+            textShadowColor: 'rgba(0, 0, 0, 0.1)',
+            textShadowOffset: { width: 0, height: 2 }, 
+            textShadowRadius: 7,
+          }}>Nos diga quais os aspectos devemos focar</Text>
       </View>
-    </ScrollView>
-  );
+
+
+      <View className='flex flex-col justify-center items-center px-6'>
+        <Text className='text-black text-2xl text-center font-FlamanteBook pb-4'>A criança consegue lembrar do que ouve ou vê por muito tempo?</Text>
+
+        <View className='flex flex-row gap-10'>
+          <CustomButton value='nao' onPress={handleAnswer} title='Não' shouldChangeColor={true} activeBgColor='bg-[#F3D175]'/>
+          <CustomButton value='nao sei' onPress={handleAnswer} title='Não sei'shouldChangeColor={true} activeBgColor='bg-[#F3D175]'/>
+          <CustomButton value='sim' onPress={handleAnswer} title='Sim'shouldChangeColor={true} activeBgColor='bg-[#F3D175]'/>
+        </View>
+      </View>
+
+
+      <View className='flex flex-col justify-center items-center px-6'>
+          <Text className='text-black text-2xl text-center font-FlamanteBook pb-4'>A criança consegue manter rotinas ao decorrer do dia?</Text>
+
+          <View className='flex flex-row gap-10'>
+            <CustomButton value='nao' onPress={handleAnswer} title='Não' shouldChangeColor={true} activeBgColor='bg-[#F3D175]'/>
+            <CustomButton value='nao sei' onPress={handleAnswer} title='Não sei'shouldChangeColor={true} activeBgColor='bg-[#F3D175]'/>
+            <CustomButton value='sim' onPress={handleAnswer} title='Sim'shouldChangeColor={true} activeBgColor='bg-[#F3D175]'/>
+          </View>
+      </View>
+
+
+      <View className='flex flex-col justify-center items-center px-6'>
+        <Text className='text-black text-2xl text-center font-FlamanteBook pb-4'>A criança consegue associar quantidade de objetos ou formas à números?</Text>
+
+        <View className='flex flex-row gap-10'>
+          <CustomButton value='nao' onPress={handleAnswer} title='Não' shouldChangeColor={true} activeBgColor='bg-[#F3D175]' />
+          <CustomButton value='nao sei' onPress={handleAnswer} title='Não sei'shouldChangeColor={true} activeBgColor='bg-[#F3D175]'/>
+          <CustomButton value='sim' onPress={handleAnswer} title='Sim'shouldChangeColor={true} activeBgColor='bg-[#F3D175]'/>
+        </View>
+      </View>
+
+        
+        <TouchableOpacity
+          onPress={() => {
+            router.navigate("/(auth)/config");
+          }}
+          className=' justify-baseline items-baseline flex flex-row p-5'
+          >
+
+          <View className='flex flex-row h-16 w-44 justify-center items-center  border-[5px] rounded-full gap-2'
+          style={{backgroundColor: '#AFA8E8', borderColor: '#735573' }}>
+
+            <Text
+              className='font-FlamanteBook text-white text-2xl'>
+                Confirmar</Text>
+          </View>
+      </TouchableOpacity>
+
+
+
+    </View>
+  )
 }
