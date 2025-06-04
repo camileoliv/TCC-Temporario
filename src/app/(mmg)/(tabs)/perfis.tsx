@@ -1,21 +1,32 @@
-import { View, Text } from 'react-native'
-import React, { useEffect}from 'react'
-import * as ScreenOrientation from 'expo-screen-orientation';
-import SignOutButton from '../../../components/SignOutButton';
 import Constants from 'expo-constants';
+import { router } from 'expo-router';
+import React from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import SignOutButton from '../../../components/btn/SignOutButton';
 
 const statusBarHeight = Constants.statusBarHeight;
 
+const goToNew = () => {
+  router.navigate('/(new)/newSignUp')
+}
+
 export default function Perfis() {
-    useEffect(() => {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    }, []);
 
   return (
     <View className='
     w-full px-4'style={{ marginTop: statusBarHeight + 1}}>
       <SignOutButton/>
-      <Text>perfis</Text>
+
+
+
+        <Text>
+          Para adicionar uma nova criança precisa cadastrar ela {'\n'}
+          deseja fazer o novo cadastro agora?
+        </Text>
+      <TouchableOpacity
+      onPress={goToNew}>
+        <Text>Sim</Text>
+      </TouchableOpacity>
     </View>
   )
 }

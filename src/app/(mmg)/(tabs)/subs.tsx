@@ -1,15 +1,11 @@
-import { View, Text } from 'react-native'
-import React, { useEffect}from 'react'
-import * as ScreenOrientation from 'expo-screen-orientation';
-import SignOutButton from '../../../components/SignOutButton';
 import Constants from 'expo-constants';
+import React from 'react';
+import { Text, View } from 'react-native';
+import SignOutButton from '../../../components/btn/SignOutButton';
 
 const statusBarHeight = Constants.statusBarHeight;
 
 export default function Subs() {
-    useEffect(() => {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    }, []);
   return (
     <View className='
     w-full px-4'style={{ marginTop: statusBarHeight + 1}}>

@@ -1,134 +1,144 @@
-import React, { useEffect } from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
-import * as ScreenOrientation from 'expo-screen-orientation';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, useWindowDimensions, View, ActivityIndicator, Alert } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
-import Constants from 'expo-constants';
-import SignOutButton from '../../components/SignOutButton';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import SignOutButton from '../../../components/btn/SignOutButton';
+import { useChild } from '../../../context/ChildContext';
 
-const screenWidth = Dimensions.get('window').width;
+const ReportScreen = () => {
+  const { width: screenWidth } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
 
-export default function RelatorioScreen() {
+  const { activeChild } = useChild();
+  const [tempo, setTempo] = useState<number[]>([]);
+  const [desempenho, setDesempenho] = useState<number[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
   const generos = ['Memória', 'Cognitivo', 'Rotina'];
 
-  const dados = {
-    tempo: [10, 70, 20],
-    desempenho: [60, 80, 40],
-  };
-
   const chartConfig = {
-    backgroundGradientFrom: '#edcbff',
-    backgroundGradientTo: '#8701cb',
+    backgroundColor: '#FCFCFE',
+    backgroundGradientFrom: '#FCFCFE',
+    backgroundGradientTo: '#FCFCFE',
     decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(128, 3, 121, 1, ${opacity})`,
-    barPercentage: 0.6,
+    color: (opacity = 1) => `rgba(115, 85, 115, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    style: { borderRadius: 16 },
+    barPercentage: 1,
     propsForBackgroundLines: {
-      stroke: '#8003bf',
+      strokeWidth: 1,
+      stroke: '#6366F1',
+      strokeDasharray: '10 5',
     },
+    propsForLabels: { fontSize: 15 },
   };
 
-  const statusBarHeight = Constants.statusBarHeight;
+  useEffect(() => {
+    const fetchReport = async () => {
+      try {
+        if (!activeChild) {
+          Alert.alert('Erro', 'Nenhuma criança ativa selecionada.');
+          return;
+        }
 
-    useEffect(() => {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    }, []);
-  
+        const response = await fetch(`https://SEU_BACKEND_API/relatorio/${activeChild.id}`);
+        if (!response.ok) throw new Error('Erro na API');
+
+        const data = await response.json();
+
+        setTempo(data.tempo ?? [0, 0, 0]);
+        setDesempenho(data.desempenho ?? [0, 0, 0]);
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Erro', 'Erro ao carregar dados do relatório');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReport();
+  }, [activeChild]);
+
+  if (loading) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color="#787ED8" />
+      </View>
+    );
+  }
+
   return (
-<View className='
-    w-full px-4'style={{ marginTop: statusBarHeight + 1, backgroundColor: '#FCFCFE'}}>
-        <SignOutButton/>
-      <Text style={styles.title}>Relatório de Desempenho</Text>
+    <View
+      className="flex-1 items-center"
+      style={[
+        styles.container,
+        {
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+        },
+      ]}
+    >
+      <SignOutButton />
 
-      
-      <Text style={styles.subtitulo}>Tempo de Uso</Text>
-      <BarChart
-        data={{
-          labels: generos,
-          datasets: [{ data: dados.tempo }],
-        }}
-        width={screenWidth - 40}
-        height={220}
-        fromZero
-        yAxisLabel=""
-        yAxisSuffix=""
-        chartConfig={chartConfig}
-        showValuesOnTopOfBars
+      <Text
+        className="font-FlamanteBook text-2xl text-[#787ED8] mb-20"
         style={{
-          borderRadius: 10,
-          marginBottom: 20,
+          color: '#787ED8',
+          textShadowColor: 'rgba(0, 0, 0, 0.1)',
+          textShadowOffset: { width: 0, height: 2 },
+          textShadowRadius: 7,
         }}
-      />
+      >
+        Relatório
+      </Text>
 
+      <Text className="font-FlamanteBook text-xl">Tempo de Uso</Text>
+      <View className="mb-20" style={styles.chartContainer}>
+        <BarChart
+          data={{
+            labels: generos,
+            datasets: [{ data: tempo }],
+          }}
+          width={screenWidth - 32}
+          height={220}
+          fromZero
+          chartConfig={chartConfig}
+          showValuesOnTopOfBars
+          withInnerLines
+        />
+      </View>
 
-      <Text style={styles.subtitulo}>Desempenho</Text>
-    <BarChart
-      data={{
-        labels: generos,
-        datasets: [{ data: dados.desempenho }],
-      }}
-      width={screenWidth - 40}
-      height={220}
-      fromZero
-      yAxisLabel=""
-      yAxisSuffix=""
-      chartConfig={chartConfig}
-      showValuesOnTopOfBars
-      style={{
-        borderRadius: 10,
-        marginBottom: 20,
-      }}
-    />
-
-</View>
+      <Text className="font-FlamanteBook text-xl">Desempenho</Text>
+      <View style={styles.chartContainer}>
+        <BarChart
+          data={{
+            labels: generos,
+            datasets: [{ data: desempenho }],
+          }}
+          width={screenWidth - 32}
+          height={220}
+          fromZero
+          chartConfig={chartConfig}
+          showValuesOnTopOfBars
+          withInnerLines
+        />
+      </View>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight + 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#fff',
-    flexGrow: 1,
-    alignSelf: 'center',
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: '#FCFCFE',
   },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    alignSelf: 'center',
-  },
-  filtros: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  botaoGenero: {
-    backgroundColor: '#f1f1f1',
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
-    margin: 5,
-  },
-  botaoSelecionado: {
-    backgroundColor: '#4C9AFF',
-  },
-  textoBotao: {
-    color: '#333',
-    fontWeight: '500',
-  },
-  textoSelecionado: {
-    color: '#fff',
-    fontWeight: '600',
-  },
-  subtitulo: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginTop: 10,
-    marginBottom: 5,
-    alignSelf: 'center',
-  },
-  grafico: {
-    borderRadius: 10,
-    marginBottom: 20,
+  chartContainer: {
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: '#6366F1',
+    padding: 8,
   },
 });
+
+export default ReportScreen;

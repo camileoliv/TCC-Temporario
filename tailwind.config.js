@@ -11,7 +11,7 @@ module.exports = {
         GlutenRegular: ['GlutenRegular'],
         FlamanteBook: ['FlamanteBook'],
         Varela: ['VarelaRegular'],
-        Cute: ['CuteDino'],
+        CuteDino: ['CuteDino'],
       },
       colors: {
           primary: {

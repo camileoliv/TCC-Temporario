@@ -34,7 +34,7 @@ export default function SignOutButton() {
           <ActivityIndicator size="small" color="#787ED8" />
         ) : (
           <Image style={{width: 60, height: 60 }} 
-          source={require('../assets/images/C_X.png')
+          source={require('../../assets/images/C_X.png')
           } />
         )}
       </View>

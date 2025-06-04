@@ -1,40 +1,63 @@
-import { View, Image, ImageBackground, TouchableOpacity } from 'react-native';
-import React, { useEffect } from 'react';
-import * as ScreenOrientation from 'expo-screen-orientation';
 import { router } from 'expo-router';
+import React, { useState } from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import { useAudio } from '../../context/AudioContext';
+import { useFontSize } from '../../context/FontSizeContext';
+import { useChild } from '../../context/ChildContext';
 
 export default function Menu() {
+  const [coins, setCoins] = useState(null);
+  const [points, setPoints] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const { playEffect } = useAudio();
+  const { fontSize } = useFontSize();
+  const { activeChild } = useChild();
 
   const gmViewPress = () => {
+    playEffect(require('../../assets/audio/African4.mp3'));
     setTimeout(() => {
-      router.navigate("/(main)/gameView");
-    }, 900);
+      router.navigate('/(main)/gameView');
+    }, 400);
   };
 
   const goToMMG = () => {
+    playEffect(require('../../assets/audio/African4.mp3'));
     setTimeout(() => {
-      router.navigate("/(mmg)/acess");
-    }, 900);
+      router.navigate('/(mmg)/acess');
+    }, 400);
   };
 
   const tasksPress = () => {
+    playEffect(require('../../assets/audio/African4.mp3'));
     setTimeout(() => {
-      router.navigate("/(main)/tasks");
-    }, 900);
+      router.navigate('/(main)/tasks');
+    }, 400);
   };
 
   const persosPress = () => {
     setTimeout(() => {
-      router.navigate("/(main)/selection");
-    }, 900);
+      router.navigate('/(main)/selection');
+    }, 400);
   };
 
-  useEffect(() => {
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    return () => {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    };
-  }, []);
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center items-center bg-black">
+        <ActivityIndicator size="large" color="#00ff00" />
+        <Text className="text-white mt-4" style={{ fontSize }}>
+          Carregando dados...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1">
@@ -43,65 +66,147 @@ export default function Menu() {
         resizeMode="cover"
         className="flex-1 justify-center items-center"
       >
-        
-      <View className="flex-row absolute top-0 right-0 mt-4 mr-4 items-center">
-        <Image 
-          source={require('../../assets/images/Coins.png')}
-          className="w-[209px] h-[80px] mx-[10px]"
-          resizeMode="contain"
-        />
 
-        <Image
-          source={require('../../assets/images/Points.png')}
-          className="w-[209px] h-[80px] mx-[10px]"
-          resizeMode="contain"
-        />
+        <View className="absolute top-4 left-4">
+          <View className="flex-row justify-start items-center bg-[#FFF7E4] w-[250px] h-[80px] rounded-3xl border-4 border-[#6C5671] gap-5">
+            <Image
+              source={require('../../assets/images/HuskySmile (2).png')}
+              resizeMode="contain"
+              className="w-[70px] h-[70px] rounded-2xl"
+            />
+            <Text
+              className="font-CuteDino text-[#b0a9e4]"
+              style={{
+                fontSize: fontSize,
+                textShadowColor: '#000',
+                textShadowOffset: { width: 2, height: 1 },
+                textShadowRadius: 9,
+              }}
+            >
+              {activeChild?.name || 'Nome da Criança'}
+            </Text>
+          </View>
+        </View>
 
-        <TouchableOpacity onPress={goToMMG}>
+        <View className="absolute top-4 right-4 flex-row items-center">
+          <View className="relative">
+            <Image
+              source={require('../../assets/images/moedas.png')}
+              className="w-[209px] h-[80px]"
+              resizeMode="contain"
+            />
+            <View className="absolute inset-0 justify-center items-center">
+              <Text
+                className="text-white font-CuteDino"
+                style={{
+                  fontSize: fontSize,
+                  alignSelf: 'flex-end',
+                  paddingEnd: 40,
+                  textShadowColor: '#000',
+                  textShadowOffset: { width: 1, height: 1 },
+                  textShadowRadius: 3,
+                }}
+              >
+                TMCoins: {coins}
+              </Text>
+            </View>
+          </View>
+
+          <View className="relative ml-2">
+            <Image
+              source={require('../../assets/images/pontos.png')}
+              className="w-[209px] h-[80px]"
+              resizeMode="contain"
+            />
+            <View className="absolute inset-0 justify-center items-center">
+              <Text
+                className="text-white font-CuteDino"
+                style={{
+                  fontSize: fontSize,
+                  textShadowColor: '#000',
+                  textShadowOffset: { width: 1, height: 1 },
+                  textShadowRadius: 3,
+                }}
+              >
+                Pontos: {points}
+              </Text>
+            </View>
+          </View>
+
+          <TouchableOpacity onPress={goToMMG}>
+            <Image
+              source={require('../../assets/images/MMG.png')}
+              className="w-[60px] h-[60px] ml-2"
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View className="gap-20 items-center self-start ml-4">
+          <TouchableOpacity onPress={persosPress} className="relative items-center">
+            <Image
+              source={require('../../assets/images/personagens.png')}
+              className="w-[209px] h-[96px] -mb-[72px]"
+              resizeMode="contain"
+            />
+            <View className="absolute left-0 right-0" style={{ top: 45 }}>
+              <Text
+                className="text-yellow-400 font-CuteDino text-center"
+                style={{
+                  fontSize,
+                  textShadowColor: '#000',
+                  textShadowOffset: { width: 1, height: 1 },
+                  textShadowRadius: 3,
+                }}
+              >
+                Personagens
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={tasksPress} className="relative items-center">
+            <Image
+              source={require('../../assets/images/missoes.png')}
+              className="w-[209px] h-[96px] -mb-[72px]"
+              resizeMode="contain"
+            />
+            <View className="absolute left-0 right-0" style={{ top: 50 }}>
+              <Text
+                className="text-yellow-400 font-CuteDino text-center"
+                style={{
+                  fontSize,
+                  textShadowColor: '#000',
+                  textShadowOffset: { width: 1, height: 1 },
+                  textShadowRadius: 3,
+                }}
+              >
+                Tarefas
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          onPress={gmViewPress}
+          className="absolute right-4 bottom-[-150px] z-10"
+        >
           <Image
-            source={require('../../assets/images/MMG.png')}
-            className="w-[60px] h-[60px] ml-[10px] mr-6"
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-      </View>
-
-      <View className='gap-20 items-start self-start ml-4'>
-        <TouchableOpacity onPress={persosPress}>
-          <Image 
-            source={require('../../assets/images/Persos.png')}
-            className="w-[209px] h-[80px] -mb-[72px]"
+            source={require('../../assets/images/Play.png')}
+            className="w-[300px] h-[400px]"
             resizeMode="contain"
           />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={tasksPress}>
+        <View
+          pointerEvents="none"
+          className="absolute top-15 left-0 right-0 bottom-0 justify-center items-center z-0"
+        >
           <Image
-            source={require('../../assets/images/Tasks.png')}
-            className="w-[209px] h-[96px] -mb-[72px]"
+            source={require('../../assets/images/huskyFront.png')}
+            className="h-[380px]"
             resizeMode="contain"
           />
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity
-        onPress={gmViewPress}
-        className="absolute right-4 bottom-[-150px] z-10"
-      >
-        <Image
-          source={require('../../assets/images/Play.png')}
-          className="w-[300px] h-[400px]" 
-          resizeMode="contain"
-        />
-      </TouchableOpacity>
-
-      <View className='absolute top-15 left-0 right-0 bottom-0 justify-center items-center z-0'>
-        <Image 
-        source={require('../../assets/images/huskyFront.png')}          className="h-[380px]"
-        resizeMode="contain"
-        />
-      </View>
-        
+        </View>
       </ImageBackground>
     </View>
   );

@@ -1,17 +1,12 @@
 import { View, Text } from 'react-native'
-import React, {useEffect} from 'react'
-import * as ScreenOrientation from 'expo-screen-orientation';
+import React from 'react'
+import BackButton from '../../components/btn/BackButton'
 
-export default function Selection() {
-    useEffect(() => {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-      return () => {
-        ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-      };
-    }, []);     
+export default function Selection() {  
   return (
     <View>
-      <Text>selection</Text>
+      <BackButton/>
+      <Text>selecao de personagens</Text>
     </View>
   )
 }

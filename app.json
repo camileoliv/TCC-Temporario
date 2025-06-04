@@ -7,45 +7,57 @@
     "icon": "./src/assets/images/barbie.jpg",
     "scheme": "tcc",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "jsEngine": "jsc"
     },
     "android": {
-      "android": {
-        "adaptiveIcon": {
-          "foregroundImage": "./src/assets/images/miss.png",
-          "backgroundColor": "#ffffff"
-        },
-        "edgeToEdgeEnabled": true
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/barbie.jpg",
+        "backgroundColor": "#ffffff"
       },
-      "web": {
-        "bundler": "metro",
-        "output": "static",
-        "favicon": "./src/assets/images/holiday2008.jpg"
+      "androidNavigationBar": {
+        "visible": "immersive",
+        "backgroundColor": "#000000"
       },
-      "plugins": [
-        "expo-router",
-        [
-          "expo-screen-orientation",
-          {
-            "initialOrientation": "PORTRAIT"
-          },
-          "expo-splash-screen",
-          {
-            "image": "./src/assets/images/holiday2008.jpg",
-            "imageWidth": 700,
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
-          }
-        ],
-        "expo-font"
-      ],
-      "experiments": {
-        "typedRoutes": true
-      }
+      "jsEngine": "jsc",
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.TCC"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": ""
     },
     "plugins": [
-    ]
+      "expo-router",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "PORTRAIT"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/images/Tela_inicial_Logo.png",
+          "imageWidth": 700,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8bb30a5f-7c16-4f30-b641-2a0a4e073751"
+      }
+    },
+    "owner": "camileolivv"
   }
 }

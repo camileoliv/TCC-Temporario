@@ -1,17 +1,12 @@
 import { View, Text } from 'react-native'
-import React, {useEffect} from 'react'
-import * as ScreenOrientation from 'expo-screen-orientation';
+import React from 'react'
+import BackButton from '../../components/btn/BackButton'
 
 export default function Missions() {
-    useEffect(() => {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-      return () => {
-        ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-      };
-    }, []);    
   return (
     <View>
-      <Text>missions</Text>
+      <BackButton/>
+      <Text>tarefas</Text>
     </View>
   )
 }

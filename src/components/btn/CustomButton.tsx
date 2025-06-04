@@ -16,7 +16,6 @@ type CustomButtonProps = {
 const CustomButton = ({ 
   value,
   onPress,
-  bgVariant = '', 
   title= '',
   textVariant = '', 
   className = '',

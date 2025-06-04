@@ -5,6 +5,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import '../styles/global.css';
+import { ChildProvider } from '../context/ChildContext';  // 👈 Importa o Provider
 
 SplashScreen.preventAutoHideAsync();
 
@@ -14,6 +15,7 @@ export default function RootLayout() {
     GlutenExtraBold: require('../assets/fonts/Gluten-ExtraBold.ttf'),
     FlamanteBook: require('../assets/fonts/Flamante-Round-Book-FFP.ttf'),
     Varela: require('../assets/fonts/VarelaRound-Regular.ttf'),
+    CuteDino: require('../assets/fonts/CuteDino.ttf'),
   });
 
   useEffect(() => {
@@ -28,12 +30,15 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider tokenCache={tokenCache}>
+      <ChildProvider>
         <Stack>
           <Stack.Screen name='index' options={{ headerShown: false }} />
           <Stack.Screen name='(auth)' options={{ headerShown: false }} />
           <Stack.Screen name='(mmg)' options={{ headerShown: false }} />
           <Stack.Screen name='(main)' options={{ headerShown: false }} />
+          <Stack.Screen name='(new)' options={{ headerShown: false }} />
         </Stack>
+      </ChildProvider>
     </ClerkProvider>
   );
 }

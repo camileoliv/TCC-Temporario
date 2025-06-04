@@ -23,7 +23,11 @@ export default function FonteSelector({ value, onChange }: Props) {
 
   return (
     <View className="mt-4">
-      <Text className="text-base font-medium mb-2">Tamanho da fonte</Text>
+      <View className="flex-row justify-between px-2 mt-1">
+        <Text className="font-FlamanteBook text-lg">pequena</Text>
+        <Text className="font-FlamanteBook text-lg">média</Text>
+        <Text className="font-FlamanteBook text-lg">grande</Text>
+      </View>
       <Slider
         minimumValue={0}
         maximumValue={2}
@@ -31,15 +35,10 @@ export default function FonteSelector({ value, onChange }: Props) {
         value={fonteLabels[value]}
         onValueChange={handleChange}
         style={{ width: 280, height: 40 }}
-        thumbTintColor="#2563eb"
-        minimumTrackTintColor="#2563eb"
+        thumbTintColor="#FFD700"
+        minimumTrackTintColor="#FFD700"
         maximumTrackTintColor="#000000"
       />
-      <View className="flex-row justify-between px-2 mt-1">
-        <Text className="text-xs">Pequena</Text>
-        <Text className="text-xs">Média</Text>
-        <Text className="text-xs">Grande</Text>
-      </View>
     </View>
   );
 }

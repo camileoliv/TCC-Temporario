@@ -2,11 +2,10 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Text, View, TextInput, Alert } from 'react-native';
 import { router } from 'expo-router';
-import BackButton from '../../components/BackButton';
+import BackButton from '../../components/btn/BackButton';
 
-// Mock function para simular verificação no banco de dados
 const checkPasswordFromDatabase = async (enteredPin: string): Promise<boolean> => {
-  const correctPassword = "123"; // Senha exemplo
+  const correctPassword = "123"; 
   return enteredPin === correctPassword;
 };
 
@@ -27,7 +26,7 @@ export default function Acesso() {
     try {
       const isValid = await checkPasswordFromDatabase(enteredPin);
       if (isValid) {
-        router.navigate("/(tabs)/report");
+        router.navigate("/report");
       } else {
         Alert.alert("Erro", "Senha incorreta!");
         setPin(['', '', '']);
