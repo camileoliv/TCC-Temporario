@@ -21,6 +21,13 @@ export default function Menu() {
   const { fontSize } = useFontSize();
   const { activeChild } = useChild();
 
+  const goToPerfil = () =>{
+    playEffect(require('../../assets/audio/African4.mp3'))
+    setTimeout(() => {
+      router.navigate('/(main)/perfil');
+    })
+  }
+
   const gmViewPress = () => {
     playEffect(require('../../assets/audio/African4.mp3'));
     setTimeout(() => {
@@ -68,6 +75,8 @@ export default function Menu() {
       >
 
         <View className="absolute top-4 left-4">
+          <TouchableOpacity
+          onPress={goToPerfil}>
           <View className="flex-row justify-start items-center bg-[#FFF7E4] w-[250px] h-[80px] rounded-3xl border-4 border-[#6C5671] gap-5">
             <Image
               source={require('../../assets/images/HuskySmile (2).png')}
@@ -85,7 +94,8 @@ export default function Menu() {
             >
               {activeChild?.name || 'Nome da Criança'}
             </Text>
-          </View>
+          </View>            
+          </TouchableOpacity>
         </View>
 
         <View className="absolute top-4 right-4 flex-row items-center">
@@ -107,7 +117,7 @@ export default function Menu() {
                   textShadowRadius: 3,
                 }}
               >
-                TMCoins: {coins}
+                TMCOINS: {coins}
               </Text>
             </View>
           </View>
@@ -128,7 +138,7 @@ export default function Menu() {
                   textShadowRadius: 3,
                 }}
               >
-                Pontos: {points}
+                PONTOS: {points}
               </Text>
             </View>
           </View>
@@ -159,7 +169,7 @@ export default function Menu() {
                   textShadowRadius: 3,
                 }}
               >
-                Personagens
+                PERSONAGENS
               </Text>
             </View>
           </TouchableOpacity>
@@ -180,7 +190,7 @@ export default function Menu() {
                   textShadowRadius: 3,
                 }}
               >
-                Tarefas
+                TAREFAS
               </Text>
             </View>
           </TouchableOpacity>

@@ -13,7 +13,7 @@ export default function GameView() {
   const games = {
     game1: 'https://asas-do-futuro.netlify.app/',
     game2: 'https://a-bagunca-de-koori.netlify.app/',
-    game3: 'https://jogo-de-andrei.netlify.app/',
+    game3: 'https://aventuras-no-jardim.netlify.app/',
   };
 
   if (selectedGame) {

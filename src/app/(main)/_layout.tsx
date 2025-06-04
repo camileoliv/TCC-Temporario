@@ -11,10 +11,6 @@ import { PersonagemProvider } from '../../context/PersonagemContext';
 const Layout = () => {
     useEffect(() => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-
-    return () => {
-      ScreenOrientation.unlockAsync();
-    };
   }, []);
 
   return (

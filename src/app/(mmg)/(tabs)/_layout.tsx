@@ -8,10 +8,6 @@ import { ChildProvider } from '../../../context/ChildContext';
 export default function TabsLayout() {
     useEffect(() => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-
-    return () => {
-      ScreenOrientation.unlockAsync();
-    };
   }, []);
   return (
     <ChildProvider>
@@ -42,7 +38,7 @@ export default function TabsLayout() {
               <Image
                 source={require('../../../assets/images/G_Book.png')}
                 style={{
-                  width: 30,
+                  width: 35,
                   height: 30,
                   tintColor: undefined,
                   opacity: focused ? 1 : 0.6,
@@ -61,7 +57,7 @@ export default function TabsLayout() {
               <Image
                 source={require('../../../assets/images/Settings.png')}
                 style={{
-                  width: 30,
+                  width: 33,
                   height: 30,
                   tintColor: undefined,
                   opacity: focused ? 1 : 0.6,
@@ -80,7 +76,7 @@ export default function TabsLayout() {
               <Image
                 source={require('../../../assets/images/Caracter.png')}
                 style={{
-                  width: 30,
+                  width: 25,
                   height: 30,
                   tintColor: undefined,
                   opacity: focused ? 1 : 0.6,
@@ -118,7 +114,7 @@ export default function TabsLayout() {
               <Image
                 source={require('../../../assets/images/ShoppingCart.png')}
                 style={{
-                  width: 30,
+                  width: 35,
                   height: 30,
                   tintColor: undefined,
                   opacity: focused ? 1 : 0.6,
@@ -137,7 +133,7 @@ export default function TabsLayout() {
               <Image
                 source={require('../../../assets/images/RoundDialog.png')}
                 style={{
-                  width: 30,
+                  width: 35,
                   height: 30,
                   tintColor: undefined,
                   opacity: focused ? 1 : 0.6,

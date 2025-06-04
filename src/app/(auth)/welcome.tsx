@@ -8,7 +8,7 @@ export default function Onboarding() {
   const handlePress = () => {
     setImageSource(require('../../assets/images/Butterfly-7.png'));
     setTimeout(() => {
-      router.navigate("/(auth)/signUp");
+      router.navigate("/(main)/menu");
     }, 500);
   };
 

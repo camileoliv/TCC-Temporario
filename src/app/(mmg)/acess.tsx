@@ -61,7 +61,7 @@ export default function Acesso() {
   return (
     <View className="flex-1 justify-center items-center p-4 bg-white">
       <BackButton/>
-      <Text className="text-xl mb-20 font-FlamanteBook">Digite a senha</Text>
+      <Text className="text-2xl mb-16 font-FlamanteBook">Digite a senha</Text>
       <View className="flex-row">
         {pin.map((value, index) => (
           <View key={index} className={`${index !== 0 ? 'pl-4' : ''}`}>

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "TCC",
-    "slug": "TCC",
+    "name": "Temoco",
+    "slug": "temoco",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/barbie.jpg",
-    "scheme": "tcc",
+    "icon": "./src/assets/images/icon.png",
+    "scheme": "temoco",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": false,
     "ios": {
@@ -14,7 +14,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/barbie.jpg",
+        "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "androidNavigationBar": {
@@ -23,12 +23,19 @@
       },
       "jsEngine": "jsc",
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.TCC"
+      "package": "com.temoco.app",
+      "permissions": [
+        "INTERNET",
+        "VIBRATE",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": ""
+      "favicon": "./src/assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
