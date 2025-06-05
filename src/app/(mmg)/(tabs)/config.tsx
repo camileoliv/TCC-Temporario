@@ -138,10 +138,10 @@ function ConfigContent() {
 
       <TouchableOpacity
         onPress={salvar}
-        className="w-48 h-16 rounded-full flex-row items-center border-[5px] justify-center gap-2"
-        style={{ backgroundColor: '#AFA8E8', borderColor: '#735573' }}
+        className="w-48 h-16 rounded-full flex-row items-center border-[2px] justify-center gap-2"
+        style={{ backgroundColor: 'white', borderColor: '#735573' }}
       >
-        <Text className="font-FlamanteBook text-white text-2xl">
+        <Text className="font-FlamanteBook text-black text-xl">
           {isCadastro ? 'Finalizar' : 'Salvar'}
         </Text>
       </TouchableOpacity>

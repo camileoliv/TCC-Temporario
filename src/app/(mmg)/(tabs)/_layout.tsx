@@ -145,6 +145,25 @@ export default function TabsLayout() {
           }}
         />
 
+          <Tabs.Screen
+          name="feedProf"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={require('../../../assets/images/RoundDialog.png')}
+                style={{
+                  width: 35,
+                  height: 30,
+                  tintColor: undefined,
+                  opacity: focused ? 1 : 0.6,
+                  transform: [{ scale: focused ? 1.2 : 1 }],
+                }}
+              />
+            ),
+            title: 'Post'
+          }}
+        />
+
       </Tabs>      
     </ChildProvider>
   );

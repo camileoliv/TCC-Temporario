@@ -14,7 +14,7 @@ const ReportScreen = () => {
   const [desempenho, setDesempenho] = useState<number[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const generos = ['Memória', 'Cognitivo', 'Rotina'];
+  const generos = ['Memória', 'Lógica', 'Rotina'];
 
   const chartConfig = {
     backgroundColor: '#FCFCFE',

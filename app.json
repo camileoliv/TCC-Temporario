@@ -4,13 +4,17 @@
     "slug": "temoco",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "temoco",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": false,
+    "splash": {
+      "image": "./src/assets/images/Tela_inicial_Logo.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
       "supportsTablet": true,
-      "jsEngine": "jsc"
+      "jsEngine": "hermes"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,39 +25,19 @@
         "visible": "immersive",
         "backgroundColor": "#000000"
       },
-      "jsEngine": "jsc",
+      "jsEngine": "hermes",
       "edgeToEdgeEnabled": true,
       "package": "com.temoco.app",
-      "permissions": [
-        "INTERNET",
-        "VIBRATE",
-        "RECORD_AUDIO",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
-      ]
+      "permissions": ["INTERNET", "VIBRATE"]
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./src/assets/images/favicon.png"
+      "favicon": "./src/assets/images/icon.png"
     },
     "plugins": [
       "expo-router",
-      [
-        "expo-screen-orientation",
-        {
-          "initialOrientation": "PORTRAIT"
-        }
-      ],
-      [
-        "expo-splash-screen",
-        {
-          "image": "./src/assets/images/Tela_inicial_Logo.png",
-          "imageWidth": 700,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ],
+      ["expo-screen-orientation", { "initialOrientation": "PORTRAIT" }],
       "expo-font"
     ],
     "experiments": {
@@ -62,7 +46,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "8bb30a5f-7c16-4f30-b641-2a0a4e073751"
+        "projectId": "47e520d1-35a8-4e00-9435-65e78b8e3b72"
       }
     },
     "owner": "camileolivv"

@@ -3,15 +3,15 @@ import { ClerkProvider } from '@clerk/clerk-expo';
 import { tokenCache } from '@clerk/clerk-expo/token-cache';
 import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { View } from 'react-native';
 import '../styles/global.css';
 import { ChildProvider } from '../context/ChildContext';
-import CheckInternet from '../components/InternetCheck';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     GlutenBold: require('../assets/fonts/Gluten-Bold.ttf'),
     GlutenExtraBold: require('../assets/fonts/Gluten-ExtraBold.ttf'),
     FlamanteBook: require('../assets/fonts/Flamante-Round-Book-FFP.ttf'),
@@ -19,29 +19,51 @@ export default function RootLayout() {
     CuteDino: require('../assets/fonts/CuteDino.ttf'),
   });
 
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
+  const [appIsReady, setAppIsReady] = useState(false);
 
-  if (!loaded && !error) {
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Aqui você pode adicionar outras operações assíncronas
+        // como carregar dados iniciais, etc.
+        await Promise.all([
+          
+          new Promise(resolve => setTimeout(resolve, 2000)),
+        ]);
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady && fontsLoaded && !fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady, fontsLoaded, fontError]);
+
+  if (!fontsLoaded || !appIsReady) {
     return null;
   }
 
   return (
-    <CheckInternet>
-      <ClerkProvider tokenCache={tokenCache}>
-        <ChildProvider>
-          <Stack>
-            <Stack.Screen name='index' options={{ headerShown: false }} />
-            <Stack.Screen name='(auth)' options={{ headerShown: false }} />
-            <Stack.Screen name='(mmg)' options={{ headerShown: false }} />
-            <Stack.Screen name='(main)' options={{ headerShown: false }} />
-            <Stack.Screen name='(new)' options={{ headerShown: false }} />
-          </Stack>
-        </ChildProvider>
-      </ClerkProvider>
-    </CheckInternet>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <ClerkProvider tokenCache={tokenCache}>
+          <ChildProvider>
+            <Stack>
+              <Stack.Screen name='index' options={{ headerShown: false }} />
+              <Stack.Screen name='(auth)' options={{ headerShown: false }} />
+              <Stack.Screen name='(mmg)' options={{ headerShown: false }} />
+              <Stack.Screen name='(main)' options={{ headerShown: false }} />
+              <Stack.Screen name='(new)' options={{ headerShown: false }} />
+            </Stack>
+          </ChildProvider>
+        </ClerkProvider>
+    </View>
   );
 }
