@@ -24,8 +24,6 @@ export default function RootLayout() {
   useEffect(() => {
     async function prepare() {
       try {
-        // Aqui você pode adicionar outras operações assíncronas
-        // como carregar dados iniciais, etc.
         await Promise.all([
           
           new Promise(resolve => setTimeout(resolve, 2000)),

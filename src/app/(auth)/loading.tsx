@@ -1,55 +1,48 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { View, Text, Animated, Easing } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { useAudio, AudioProvider } from '../../context/AudioContext';
 import { useConfig, ConfigProvider } from '../../context/ConfigContext';
+import { useChild, ChildProvider } from '../../context/ChildContext';
 
 function LoadingContent() {
   const router = useRouter();
 
+  const { activeChild } = useChild();
   const { setBrilho, setFonte } = useConfig();
   const { setMusica, setSons, setTrancarVolume } = useAudio();
 
-  const [progress] = useState(new Animated.Value(0));
-
-  const childId = 'ID_DA_CRIANCA'; // ← Substituir pela lógica real
+  const progress = useRef(new Animated.Value(0)).current;
 
   // ⚙️ Animação da barra de progresso
   useEffect(() => {
     Animated.timing(progress, {
       toValue: 1,
-      duration: 5000,
+      duration: 4000,
       easing: Easing.linear,
       useNativeDriver: false,
     }).start();
-  }, [progress]);
+  }, []);
 
-  // 🔗 Busca dados da API e atualiza os contextos
+  // 🔗 Simula carregamento dos dados locais
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`https://SEU_BACKEND_API/criancas/${childId}`);
-        const data = await res.json();
+    if (activeChild) {
+      const { config } = activeChild;
 
-        if (data?.config) {
-          if (data.config.brilho != null) setBrilho(data.config.brilho);
-          if (data.config.fonte) setFonte(data.config.fonte);
-          if (data.config.musica != null) setMusica(data.config.musica);
-          if (data.config.sons != null) setSons(data.config.sons);
-          if (data.config.trancarVolume != null) setTrancarVolume(data.config.trancarVolume);
-        }
+      if (config.brilho != null) setBrilho(config.brilho);
+      if (config.fonte) setFonte(config.fonte);
+      if (config.musica != null) setMusica(config.musica);
+      if (config.sons != null) setSons(config.sons);
+      if (config.trancarVolume != null) setTrancarVolume(config.trancarVolume);
+    }
 
-        setTimeout(() => {
-          router.push('/(main)/menu');
-        }, 5200);
-      } catch (error) {
-        console.error('Erro ao buscar dados:', error);
-      }
-    };
+    const timer = setTimeout(() => {
+      router.push('/(main)/menu');
+    }, 3500); // ⏳ Antes de chegar a 100%, aos 95%
 
-    fetchData();
-  }, [router, setBrilho, setFonte, setMusica, setSons, setTrancarVolume]);
+    return () => clearTimeout(timer);
+  }, [activeChild]);
 
   const widthInterpolated = progress.interpolate({
     inputRange: [0, 1],
@@ -80,10 +73,12 @@ function LoadingContent() {
 
 export default function Loading() {
   return (
-    <ConfigProvider>
-      <AudioProvider>
-        <LoadingContent />
-      </AudioProvider>
-    </ConfigProvider>
+    <ChildProvider>
+      <ConfigProvider>
+        <AudioProvider>
+          <LoadingContent />
+        </AudioProvider>
+      </ConfigProvider>
+    </ChildProvider>
   );
 }

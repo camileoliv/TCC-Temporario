@@ -5,8 +5,6 @@ import { useEffect } from 'react';
 
 import { ConfigProvider } from '../../context/ConfigContext';
 import { AudioProvider } from '../../context/AudioContext';
-import { ChildProvider } from '../../context/ChildContext';
-import { PersonagemProvider } from '../../context/PersonagemContext';
 
 const Layout = () => {
     useEffect(() => {
@@ -15,8 +13,6 @@ const Layout = () => {
 
   return (
     <>
-    <PersonagemProvider>
-      <ChildProvider>
         <ConfigProvider>
           <AudioProvider>
             <Stack>
@@ -28,8 +24,6 @@ const Layout = () => {
             </Stack>
           </AudioProvider> 
         </ConfigProvider>        
-      </ChildProvider>       
-    </PersonagemProvider>
     </>
   )
 }

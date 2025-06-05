@@ -6,6 +6,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 import { useSignUp } from '@clerk/clerk-expo';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import * as Crypto from 'expo-crypto';
 
 import DateInput from '../../components/verification/DateInput';
 import InputField from '../../components/InputField';
@@ -13,7 +14,11 @@ import { Modal } from '../../components/Modal';
 import PinInput from '../../components/verification/PasswordField';
 import EmailVerificationModal from '../../components/verification/EmailVerificationModal';
 
+import { useChild } from '../../context/ChildContext'; // <- Importa o contexto
+
 export default function Registro() {
+  const { addChild } = useChild(); // <- Usa o contexto
+
   useEffect(() => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
   }, []);
@@ -57,6 +62,21 @@ export default function Registro() {
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+
+      // 🔥 Cria a criança no contexto local
+      const newChild = {
+        id: Crypto.randomUUID(),
+        nome: form.nameChildren,
+        config: {
+          brilho: 1,
+          fonte: 'media',
+          musica: true,
+          sons: true,
+          trancarVolume: false,
+        },
+      };
+
+      addChild(newChild);
 
       setShowVerificationModal(true);
     } catch (err) {
@@ -111,12 +131,12 @@ export default function Registro() {
             rightIcon={<MaterialCommunityIcons name="email" size={27} color="#35AFA3" />}
           />
 
-          <InputField 
-          label='Especializacao médica'
-          placeholder='Digite a sua area médica'
-          value={form.cargo}
-          onChangeText={(value) => handleChange ('cargo', value)}
-          rightIcon={<FontAwesome6 name="stethoscope" size={27} color="#35AFA3" />}          
+          <InputField
+            label="Especialização médica"
+            placeholder="Digite a sua área médica"
+            value={form.cargo}
+            onChangeText={(value) => handleChange('cargo', value)}
+            rightIcon={<FontAwesome6 name="stethoscope" size={27} color="#35AFA3" />}
           />
 
           <InputField
@@ -172,9 +192,7 @@ export default function Registro() {
 
           <View className="my-2 w-full">
             <Text className="text-3xl text-left font-FlamanteBook mb-3">Data de nascimento</Text>
-            <DateInput
-              onDateChange={(formattedDate: string) => handleChange('birthDate', formattedDate)}
-            />
+            <DateInput onDateChange={(formattedDate: string) => handleChange('birthDate', formattedDate)} />
           </View>
 
           <TouchableOpacity

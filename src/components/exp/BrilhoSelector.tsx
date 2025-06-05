@@ -1,6 +1,5 @@
 import { View, Text } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { useConfig } from '../../context/ConfigContext';
 
 type Props = {
   value: number;
@@ -10,7 +9,7 @@ type Props = {
 export default function BrilhoSelector({ value, onChange }: Props) {
   return (
     <View style={{ marginTop: 20, width: 300, alignItems: 'center' }}>
-      <Text className='font-FlamanteBook' style={{ fontSize: 16, marginBottom: 10 }}>
+      <Text className="font-FlamanteBook" style={{ fontSize: 16, marginBottom: 10 }}>
         brilho
       </Text>
       <Slider
@@ -26,3 +25,4 @@ export default function BrilhoSelector({ value, onChange }: Props) {
     </View>
   );
 }
+

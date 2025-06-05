@@ -1,6 +1,13 @@
-import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { useAudio } from '../../context/AudioContext';
+
+type Props = {
+  musica: boolean;
+  sons: boolean;
+  trancarVolume: boolean;
+  setMusica: (value: boolean) => void;
+  setSons: (value: boolean) => void;
+  setTrancarVolume: (value: boolean) => void;
+};
 
 const OptionButton = ({
   label,
@@ -21,9 +28,14 @@ const OptionButton = ({
   </Pressable>
 );
 
-export default function AudioSettings() {
-  const { musica, sons, trancarVolume, setMusica, setSons, setTrancarVolume } = useAudio();
-
+export default function AudioSettings({
+  musica,
+  sons,
+  trancarVolume,
+  setMusica,
+  setSons,
+  setTrancarVolume,
+}: Props) {
   return (
     <View className="mt-6 w-full">
       <View className="flex-row justify-between items-center mb-1">
@@ -33,24 +45,16 @@ export default function AudioSettings() {
       </View>
       <View className="flex-row justify-between gap-[10px]">
         <View className="flex-row">
-          <OptionButton label="Sim" selected={musica === true} onPress={() => setMusica(true)} />
-          <OptionButton label="Não" selected={musica === false} onPress={() => setMusica(false)} />
+          <OptionButton label="Sim" selected={musica} onPress={() => setMusica(true)} />
+          <OptionButton label="Não" selected={!musica} onPress={() => setMusica(false)} />
         </View>
         <View className="flex-row">
-          <OptionButton label="Sim" selected={sons === true} onPress={() => setSons(true)} />
-          <OptionButton label="Não" selected={sons === false} onPress={() => setSons(false)} />
+          <OptionButton label="Sim" selected={sons} onPress={() => setSons(true)} />
+          <OptionButton label="Não" selected={!sons} onPress={() => setSons(false)} />
         </View>
         <View className="flex-row">
-          <OptionButton
-            label="Sim"
-            selected={trancarVolume === true}
-            onPress={() => setTrancarVolume(true)}
-          />
-          <OptionButton
-            label="Não"
-            selected={trancarVolume === false}
-            onPress={() => setTrancarVolume(false)}
-          />
+          <OptionButton label="Sim" selected={trancarVolume} onPress={() => setTrancarVolume(true)} />
+          <OptionButton label="Não" selected={!trancarVolume} onPress={() => setTrancarVolume(false)} />
         </View>
       </View>
     </View>

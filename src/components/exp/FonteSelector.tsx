@@ -1,32 +1,37 @@
-import React from 'react';
 import { View, Text } from 'react-native';
 import Slider from '@react-native-community/slider';
 
-type FonteOption = 'pequena' | 'media' | 'grande';
+export type FonteOption = 'pequena' | 'media' | 'grande';
 
 type Props = {
   value: FonteOption;
-  onChange: (val: FonteOption) => void;
+  onChange: (value: FonteOption) => void;
 };
 
 const fonteLabels = {
   pequena: 0,
   media: 1,
   grande: 2,
-};
+} as const;
+
+const labelToValue = {
+  0: 'pequena',
+  1: 'media',
+  2: 'grande',
+} as const;
 
 export default function FonteSelector({ value, onChange }: Props) {
-  const handleChange = (newValue: number) => {
-    const newFonte = Object.keys(fonteLabels)[newValue] as FonteOption;
+  const handleChange = (val: number) => {
+    const newFonte = labelToValue[val as keyof typeof labelToValue];
     onChange(newFonte);
   };
 
   return (
     <View className="mt-4">
-      <View className="flex-row justify-between px-2 mt-1">
-        <Text className="font-FlamanteBook text-lg">pequena</Text>
-        <Text className="font-FlamanteBook text-lg">média</Text>
-        <Text className="font-FlamanteBook text-lg">grande</Text>
+      <View className="flex-row justify-between px-2 mb-2">
+        <Text className="font-FlamanteBook text-base">pequena</Text>
+        <Text className="font-FlamanteBook text-base">média</Text>
+        <Text className="font-FlamanteBook text-base">grande</Text>
       </View>
       <Slider
         minimumValue={0}
